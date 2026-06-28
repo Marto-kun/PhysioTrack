@@ -14,33 +14,65 @@ public class EquipoBiomedico {
 
     private String id;
     private String nombre;
+    private String fechaElaboracion;
     private String estado;
 
-    public EquipoBiomedico(String id, String nombre) {
+    public EquipoBiomedico(String id,
+                           String nombre,
+                           String fechaElaboracion,
+                           String estado) {
+
         this.id = id;
         this.nombre = nombre;
-        this.estado = "Disponible";
+        this.fechaElaboracion = fechaElaboracion;
+        this.estado = estado;
     }
+
+    // Getters
 
     public String getId() {
         return id;
     }
 
-    public void asignarPaciente(String paciente) {
+    public String getNombre() {
+        return nombre;
+    }
 
-        if (estado.equals("Disponible")) {
+    public String getFechaElaboracion() {
+        return fechaElaboracion;
+    }
 
-            estado = "En Uso";
+    public String getEstado() {
+        return estado;
+    }
 
-            System.out.println("\nEquipo asignado correctamente.");
-            System.out.println("Paciente: " + paciente);
-            System.out.println("Equipo: " + nombre);
+    // Setters
 
-        } else {
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-            System.out.println("El equipo no está disponible.");
-            System.out.println("Estado actual: " + estado);
+    public void setFechaElaboracion(String fechaElaboracion) {
+        this.fechaElaboracion = fechaElaboracion;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    // Métodos
+
+    public boolean disponible() {
+        return estado.equalsIgnoreCase("Disponible");
+    }
+
+    public void asignarEquipo() {
+
+        if (!disponible()) {
+            throw new IllegalArgumentException("El equipo no está disponible.");
         }
+
+        estado = "En Uso";
     }
 
     public void liberarEquipo() {
@@ -49,13 +81,5 @@ public class EquipoBiomedico {
 
     public void enviarMantenimiento() {
         estado = "Mantenimiento";
-    }
-
-    public void mostrarEquipo() {
-
-        System.out.println("\n===== EQUIPO BIOMÉDICO =====");
-        System.out.println("ID: " + id);
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Estado: " + estado);
     }
 }
