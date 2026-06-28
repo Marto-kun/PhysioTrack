@@ -14,22 +14,26 @@ public class Insumo {
 
     private String id;
     private String nombre;
+    private String fechaElaboracion;
     private String fechaCaducidad;
     private int stock;
     private int stockMinimo;
 
     public Insumo(String id, String nombre,
+                  String fechaElaboracion,
                   String fechaCaducidad,
                   int stock,
                   int stockMinimo) {
 
         this.id = id;
         this.nombre = nombre;
+        this.fechaElaboracion = fechaElaboracion;
         this.fechaCaducidad = fechaCaducidad;
         this.stock = stock;
         this.stockMinimo = stockMinimo;
     }
 
+    // Getters
     public String getId() {
         return id;
     }
@@ -38,39 +42,72 @@ public class Insumo {
         return nombre;
     }
 
-    public void utilizar(int cantidad) {
+    public String getFechaElaboracion() {
+        return fechaElaboracion;
+    }
+
+    public String getFechaCaducidad() {
+        return fechaCaducidad;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public int getStockMinimo() {
+        return stockMinimo;
+    }
+
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setFechaElaboracion(String fechaElaboracion) {
+        this.fechaElaboracion = fechaElaboracion;
+    }
+
+    public void setFechaCaducidad(String fechaCaducidad) {
+        this.fechaCaducidad = fechaCaducidad;
+    }
+
+    // Agregar unidades al inventario
+    public void agregarStock(int cantidad) {
+
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
+        }
+
+        stock += cantidad;
+    }
+
+    // Descontar unidades del inventario
+    public void utilizarInsumo(int cantidad) {
+
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
+        }
 
         if (cantidad > stock) {
-            System.out.println("No hay suficiente stock.");
-            return;
+            throw new IllegalArgumentException("Stock insuficiente.");
         }
 
         stock -= cantidad;
-
-        System.out.println("Se utilizaron "
-                + cantidad + " unidades.");
-
-        System.out.println("Stock restante: "
-                + stock);
-
-        if (stock <= stockMinimo) {
-            System.out.println("⚠ ALERTA: Stock bajo.");
-        }
     }
 
-    public void mostrarInsumo() {
-
-        System.out.println("\n===== INSUMO =====");
-        System.out.println("ID: " + id);
-        System.out.println("Nombre: " + nombre);
-
-        if (fechaCaducidad != null) {
-            System.out.println("Caducidad: "
-                    + fechaCaducidad);
-        } else {
-            System.out.println("Caducidad: No aplica");
-        }
-
-        System.out.println("Stock: " + stock);
+    // Verificar si el stock está por debajo del mínimo
+    public boolean stockBajo() {
+        return stock <= stockMinimo;
     }
+
+    // Verificar si el insumo tiene fecha de caducidad
+    public boolean tieneCaducidad() {
+        return fechaCaducidad != null && !fechaCaducidad.trim().isEmpty();
+    }
+
+    // Verificar si el insumo tiene fecha de elaboración
+    public boolean tieneFechaElaboracion() {
+        return fechaElaboracion != null && !fechaElaboracion.trim().isEmpty();
+    }
+}
 }
