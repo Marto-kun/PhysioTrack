@@ -110,4 +110,4 @@ public class Insumo {
         return fechaElaboracion != null && !fechaElaboracion.trim().isEmpty();
     }
 }
-}
+

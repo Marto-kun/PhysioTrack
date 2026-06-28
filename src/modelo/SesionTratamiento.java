@@ -19,10 +19,12 @@ public class SesionTratamiento {
     private Insumo insumo;
     private String observaciones;
     private int duracionMinutos;
+    private Fisioterapeuta fisioterapeutaResponsable;
 
     public SesionTratamiento(String idSesion,
                              String fecha,
                              Paciente paciente,
+                             Fisioterapeuta fisioterapeutaResponsable,
                              EquipoBiomedico equipo,
                              Insumo insumo,
                              String observaciones,
@@ -31,6 +33,7 @@ public class SesionTratamiento {
         this.idSesion = idSesion;
         this.fecha = fecha;
         this.paciente = paciente;
+        this.fisioterapeutaResponsable = fisioterapeutaResponsable;
         this.equipo = equipo;
         this.insumo = insumo;
         this.observaciones = observaciones;
@@ -67,6 +70,10 @@ public class SesionTratamiento {
         return duracionMinutos;
     }
 
+    public Fisioterapeuta getFisioterapeutaResponsable() {
+        return fisioterapeutaResponsable;
+    }
+
     // Setters
 
     public void setFecha(String fecha) {
@@ -87,6 +94,10 @@ public class SesionTratamiento {
 
     public void cambiarInsumo(Insumo insumo) {
         this.insumo = insumo;
+    }
+
+    public void setFisioterapeutaResponsable(Fisioterapeuta fisioterapeutaResponsable) {
+        this.fisioterapeutaResponsable = fisioterapeutaResponsable;
     }
 
     // Métodos

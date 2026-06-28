@@ -18,6 +18,7 @@ public class Paciente {
     private String tipoLesion;
     private int nivelLesion;
     private String prioridad;
+    private Fisioterapeuta fisioterapeutaAsignado;
 
     public Paciente(String cedula, String nombre, int edad,
                     String tipoLesion, int nivelLesion) {
@@ -40,6 +41,24 @@ public class Paciente {
         } else {
             prioridad = "Preventivo";
         }
+    }
+
+    /**
+     * Comparacion mediante numero de cedula
+     * @param object   the reference object with which to compare.
+     * @return
+     */
+    @Override
+    public boolean equals(Object object){
+        if(this == object){
+            return true;
+        }
+
+        if(object == null || getClass() != object.getClass()){
+            return false;
+        }
+        Paciente otro = (Paciente) object;
+        return this.getCedula() != null && this.getCedula().equals(otro.getCedula());
     }
 
     // Getters
@@ -68,6 +87,10 @@ public class Paciente {
         return prioridad;
     }
 
+    public Fisioterapeuta getFisioterapeutaAsignado() {
+        return fisioterapeutaAsignado;
+    }
+
     // Setters
 
     public void setNombre(String nombre) {
@@ -86,6 +109,10 @@ public class Paciente {
     public void setNivelLesion(int nivelLesion) {
         this.nivelLesion = nivelLesion;
         calcularPrioridad();
+    }
+
+    public void setFisioterapeutaAsignado(Fisioterapeuta fisioterapeutaAsignado) {
+        this.fisioterapeutaAsignado = fisioterapeutaAsignado;
     }
 
     // Métodos

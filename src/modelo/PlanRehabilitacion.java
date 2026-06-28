@@ -5,7 +5,7 @@ package modelo;
  * Controla la intensidad de las rutinas (series, repeticiones y días) y realiza
  * el seguimiento del porcentaje de cumplimiento y progreso físico del tratamiento.
  *
- * @author [Por llenar]
+ * @author [Roberto Cordero, Martin Vozmediano]
  * @version 1.0
  * @since 2026-05-19
  */
@@ -13,7 +13,7 @@ package modelo;
 public class PlanRehabilitacion {
 
     private String idPlan;
-    private String nombrePaciente;
+    private Paciente paciente;
     private String ejercicio;
 
     private int series;
@@ -24,14 +24,14 @@ public class PlanRehabilitacion {
     private double progresoFisico;
 
     public PlanRehabilitacion(String idPlan,
-                              String nombrePaciente,
+                              Paciente paciente,
                               String ejercicio,
                               int series,
                               int repeticiones,
                               int diasPorSemana) {
 
         this.idPlan = idPlan;
-        this.nombrePaciente = nombrePaciente;
+        this.paciente = paciente;
         this.ejercicio = ejercicio;
         this.series = series;
         this.repeticiones = repeticiones;
@@ -48,7 +48,7 @@ public class PlanRehabilitacion {
     }
 
     public String getNombrePaciente() {
-        return nombrePaciente;
+        return paciente.getNombre();
     }
 
     public String getEjercicio() {
