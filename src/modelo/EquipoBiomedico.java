@@ -1,3 +1,15 @@
+package modelo;
+
+/**
+ * Modela las máquinas especializadas de la clínica (ej. Ultrasonido, Magnetoterapia).
+ * Encapsula el estado operativo del equipo (Disponible, Ocupado, Mantenimiento)
+ * y acumula sus horas de uso para evaluar si requiere soporte técnico preventivo.
+ *
+ * @author [Roberto Cordero]
+ * @version 1.0
+ * @since 2026-05-19
+ */
+
 public class EquipoBiomedico {
 
     private String id;
@@ -5,7 +17,6 @@ public class EquipoBiomedico {
     private String estado;
 
     public EquipoBiomedico(String id, String nombre) {
-
         this.id = id;
         this.nombre = nombre;
         this.estado = "Disponible";
