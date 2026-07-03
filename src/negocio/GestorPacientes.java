@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GestorPacientes {
 
-    private List<Paciente> listaPacientes = new ArrayList();
+    private List<Paciente> listaPacientes = new ArrayList<>();
 
     public GestorPacientes() {
         //Constructor vacio
@@ -37,7 +37,7 @@ public class GestorPacientes {
         if (!listaPacientes.contains(nuevo)) {
             listaPacientes.add(nuevo);
         } else {
-            System.out.println("Error: El paciente ya ha sido registrado. Intente con uno nuevo.");
+            throw new IllegalStateException("Error: El paciente ya ha sido registrado. Intente con uno nuevo.");
         }
     }
 

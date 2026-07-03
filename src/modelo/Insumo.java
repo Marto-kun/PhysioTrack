@@ -78,7 +78,7 @@ public class Insumo {
             throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
         }
 
-        stock += cantidad;
+        this.stock += cantidad;
     }
 
     // Descontar unidades del inventario
@@ -88,11 +88,11 @@ public class Insumo {
             throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
         }
 
-        if (cantidad > stock) {
+        if (cantidad > this.stock) {
             throw new IllegalArgumentException("Stock insuficiente.");
         }
 
-        stock -= cantidad;
+        this.stock -= cantidad;
     }
 
     // Verificar si el stock está por debajo del mínimo
