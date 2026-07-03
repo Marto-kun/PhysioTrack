@@ -32,6 +32,17 @@ public class Paciente {
         calcularPrioridad();
     }
 
+
+    // Métodos
+
+    public boolean esAdultoMayor() {
+        return edad >= 65;
+    }
+
+    public boolean requiereAtencionUrgente() {
+        return prioridad.equals("Urgente");
+    }
+
     private void calcularPrioridad() {
 
         if (nivelLesion >= 8 || edad >= 65) {
@@ -45,20 +56,32 @@ public class Paciente {
 
     /**
      * Comparacion mediante numero de cedula
-     * @param object   the reference object with which to compare.
+     *
+     * @param object the reference object with which to compare.
      * @return
      */
     @Override
-    public boolean equals(Object object){
-        if(this == object){
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
 
-        if(object == null || getClass() != object.getClass()){
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
         Paciente otro = (Paciente) object;
         return this.getCedula() != null && this.getCedula().equals(otro.getCedula());
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente: " + getNombre() +
+                ", Cédula: " + getCedula() +
+                ", Edad: " + edad
+                + ", Tipo de Lesión: " + getTipoLesion() +
+                ", Nivel de Lesión: " + getNivelLesion()
+                + ", Prioridad: " + getPrioridad()
+                + (fisioterapeutaAsignado != null ? ", Fisioterapeuta Asignado: " + fisioterapeutaAsignado.getNombre() : "");
     }
 
     // Getters
@@ -115,13 +138,4 @@ public class Paciente {
         this.fisioterapeutaAsignado = fisioterapeutaAsignado;
     }
 
-    // Métodos
-
-    public boolean esAdultoMayor() {
-        return edad >= 65;
-    }
-
-    public boolean requiereAtencionUrgente() {
-        return prioridad.equals("Urgente");
-    }
 }
