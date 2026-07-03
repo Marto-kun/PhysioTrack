@@ -16,6 +16,7 @@ public class EquipoBiomedico {
     private String nombre;
     private String fechaElaboracion;
     private String estado;
+    private int horasDeUso = 0;
 
     public EquipoBiomedico(String id,
                            String nombre,
@@ -26,6 +27,33 @@ public class EquipoBiomedico {
         this.nombre = nombre;
         this.fechaElaboracion = fechaElaboracion;
         this.estado = estado;
+    }
+
+    // Métodos
+
+    public boolean disponible() {
+        return estado.equalsIgnoreCase("Disponible");
+    }
+
+    public void asignarEquipo() {
+
+        if (!disponible()) {
+            throw new IllegalArgumentException("El equipo no está disponible.");
+        }
+
+        estado = "En Uso";
+    }
+
+    public boolean necesitaMantenimiento(){
+        return this.horasDeUso >= 50;
+    }
+
+    public void liberarEquipo() {
+        estado = "Disponible";
+    }
+
+    public void enviarMantenimiento() {
+        estado = "Mantenimiento";
     }
 
     // Getters
@@ -46,6 +74,10 @@ public class EquipoBiomedico {
         return estado;
     }
 
+    public int getHorasDeUso() {
+        return horasDeUso;
+    }
+
     // Setters
 
     public void setNombre(String nombre) {
@@ -60,26 +92,7 @@ public class EquipoBiomedico {
         this.estado = estado;
     }
 
-    // Métodos
-
-    public boolean disponible() {
-        return estado.equalsIgnoreCase("Disponible");
-    }
-
-    public void asignarEquipo() {
-
-        if (!disponible()) {
-            throw new IllegalArgumentException("El equipo no está disponible.");
-        }
-
-        estado = "En Uso";
-    }
-
-    public void liberarEquipo() {
-        estado = "Disponible";
-    }
-
-    public void enviarMantenimiento() {
-        estado = "Mantenimiento";
+    public void setHorasDeUso(int horasDeUso) {
+        this.horasDeUso = horasDeUso;
     }
 }

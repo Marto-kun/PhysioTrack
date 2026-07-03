@@ -1,30 +1,46 @@
-### IntelliJ IDEA ###
+# =========================================================================
+# PhysioTrack - Master .gitignore
+# =========================================================================
+
+### Compilación y Salidas de Java (Maven, NetBeans, IDEs) ###
+/target/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-.kotlin
-
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-
-### NetBeans ###
-/nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+.kotlin
 
 ### VS Code ###
 .vscode/
 
-### Mac OS ###
+### NetBeans ###
+/nbproject/private/
+/.nb-gradle/
+
+### Eclipse ###
+.settings
+.project
+.classpath
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+
+### Vaadin & Frontend Web Development (¡Esencial!) ###
+# Estos archivos son generados/actualizados automáticamente por vaadin-maven-plugin
+node_modules/
+src/main/frontend/generated/
+vite.generated.ts
+
+### Sistema Operativo (Mac OS / Windows) ###
 .DS_Store
+Thumbs.db
