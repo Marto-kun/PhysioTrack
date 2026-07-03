@@ -119,4 +119,34 @@ public class GestorPacientes {
         return urgentes;
     }
 
+    /**
+     * Metodo de actualización de nivel de lesion
+     * @param cedula
+     * @param nuevoNivel
+     */
+    public void actualizarGravedadLesion(String cedula, int nuevoNivel) {
+        Paciente paciente = buscarPorCedula(cedula);
+        if (paciente != null) {
+            paciente.setNivelLesion(nuevoNivel);
+        } else {
+            throw new IllegalArgumentException("Paciente no encontrado para actualizar.");
+        }
+    }
+
+    /**
+     * Metodo para dar de alta a un paciente
+     * @param paciente
+     */
+    public void darAltaMedica(Paciente paciente) {
+        if (paciente == null) {
+            throw new IllegalArgumentException("Error: El paciente no puede ser nulo");
+        }
+
+        Fisioterapeuta fisio = paciente.getFisioterapeutaAsignado();
+        if (fisio != null) {
+            fisio.eliminarPaciente(paciente); // Lo saca de la lista del fisioterapeuta
+            paciente.setFisioterapeutaAsignado(null); // Lo libera en el objeto paciente
+        }
+    }
+
 }
