@@ -34,17 +34,15 @@ public class EvaluadorRutinas {
 	/**
 	 * Asigna un nuevo plan a un paciente aplicando las reglas de negocio.
 	 *
-	 * @param cedulaPaciente cédula del paciente (no nulo ni vacío)
-	 * @param nuevoPlan      plan a asignar (no nulo)
-	 * @param nivelLesion    nivel de lesión entre 1 y 10 (incluidos)
-	 * @throws IllegalArgumentException si algún parámetro es inválido
-	 * @throws IllegalStateException    si el plan excede límites cuando nivelLesion >=7
+	 * @param cedulaPaciente
+	 * @param nuevoPlan
+	 * @param nivelLesion
 	 */
 	public void asignarPlan(String cedulaPaciente, PlanRehabilitacion nuevoPlan, int nivelLesion) {
 		if (cedulaPaciente == null || cedulaPaciente.isEmpty()) {
 			throw new IllegalArgumentException("La cédula del paciente no puede ser nula o vacía.");
 		}
-		Objects.requireNonNull(nuevoPlan, "El plan a asignar no puede ser nulo.");
+		Objects.requireNonNull(nuevoPlan, "Error. El plan a asignar no puede ser nulo.");
 
 		if (nivelLesion < 1 || nivelLesion > 10) {
 			throw new IllegalArgumentException("El nivel de lesión debe estar entre 1 y 10.");
@@ -70,9 +68,8 @@ public class EvaluadorRutinas {
 	 * Realiza el seguimiento semanal del paciente sumando los días asignados y los días completados
 	 * de todos sus planes y devuelve un mensaje con el porcentaje alcanzado.
 	 *
-	 * @param cedulaPaciente cédula del paciente (no nulo ni vacío)
+	 * @param cedulaPaciente
 	 * @return texto formateado "[porcentaje]% de la meta alcanzada."; "0%..." si no tiene planes
-	 * @throws IllegalArgumentException si la cédula es nula o vacía
 	 */
 	public String seguimientoSemanal(String cedulaPaciente) {
 		if (cedulaPaciente == null || cedulaPaciente.isEmpty()) {
@@ -110,10 +107,8 @@ public class EvaluadorRutinas {
 	 * Registra la finalización de un día de ejercicio para un plan específico. No permite
 	 * que el contador de días completados supere los días asignados para ese plan.
 	 *
-	 * @param cedulaPaciente cédula del paciente (no nulo ni vacío)
-	 * @param idPlan         identificador del plan (no nulo ni vacío)
-	 * @throws IllegalArgumentException si alguno de los parámetros es inválido o el plan no existe
-	 * @throws IllegalStateException    si se intenta incrementar más allá de los días asignados
+	 * @param cedulaPaciente
+	 * @param idPlan
 	 */
 	public void registrarDiaCompletado(String cedulaPaciente, String idPlan) {
 		if (cedulaPaciente == null || cedulaPaciente.isEmpty()) {
@@ -154,9 +149,8 @@ public class EvaluadorRutinas {
 	/**
 	 * Devuelve una copia no modificable de la lista de planes asignados a un paciente.
 	 *
-	 * @param cedulaPaciente cédula del paciente (no nulo ni vacío)
+	 * @param cedulaPaciente
 	 * @return lista inmutable de planes; lista vacía si no existen planes
-	 * @throws IllegalArgumentException si la cédula es nula o vacía
 	 */
 	public List<PlanRehabilitacion> getPlanesPorPaciente(String cedulaPaciente) {
 		if (cedulaPaciente == null || cedulaPaciente.isEmpty()) {
