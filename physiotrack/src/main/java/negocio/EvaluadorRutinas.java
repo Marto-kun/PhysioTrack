@@ -10,20 +10,12 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Servicio encargado de evaluar, almacenar y seguir el cumplimiento de planes de
- * rehabilitación asignados a pacientes. Implementa reglas de negocio relacionadas
- * con la asignación segura de intensidad de ejercicios y el seguimiento semanal
- * del cumplimiento.
+ * Controlador especializado en la verificación y seguridad de las rutinas físicas.
+ * Aplica las reglas de negocio críticas del sistema para asegurar que la intensidad
+ * de un ejercicio no represente un riesgo para la escala de dolor y lesión del paciente.
  *
- * Reglas implementadas (resumen):
- * - RF3: Asignación de plan validando nivel de lesión y límites de series/repeticiones.
- * - RF4: Seguimiento semanal que suma días asignados y días completados y devuelve
- *   un texto con el porcentaje de la meta alcanzada.
- *
- * Esta clase mantiene en memoria (colecciones nativas) los planes por cédula de
- * paciente y un contador por plan de los días completados. Se prioriza la
- * inmutabilidad de las referencias de las colecciones principales usando {@code final}.
- *
+ * @author [Martin Vozmedian]
+ * @version 1.0
  * @since 2026-05-19
  */
 public class EvaluadorRutinas {
