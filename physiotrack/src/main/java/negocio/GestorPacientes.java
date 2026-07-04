@@ -1,7 +1,7 @@
-package negocio;
+package main.java.negocio;
 
-import modelo.Paciente;
-import modelo.Fisioterapeuta;
+import main.java.modelo.Paciente;
+import main.java.modelo.Fisioterapeuta;
 
 import java.util.ArrayList;
 import java.util.List;

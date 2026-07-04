@@ -1,4 +1,4 @@
-package modelo;
+package main.java.modelo;
 
 /**
  * Representa a un paciente dentro del sistema PhysioTrack.

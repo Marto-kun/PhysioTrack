@@ -1,4 +1,4 @@
-package modelo;
+package main.java.modelo;
 
 /**
  * Modela el plan de ejercicios terapéuticos asignado a un paciente.

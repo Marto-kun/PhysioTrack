@@ -1,6 +1,6 @@
-package negocio;
+package main.java.negocio;
 
-import modelo.PlanRehabilitacion;
+import main.java.modelo.PlanRehabilitacion;
 
 import java.util.ArrayList;
 import java.util.Collections;

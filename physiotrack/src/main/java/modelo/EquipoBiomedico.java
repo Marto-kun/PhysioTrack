@@ -1,4 +1,4 @@
-package modelo;
+package main.java.modelo;
 
 /**
  * Modela las máquinas especializadas de la clínica (ej. Ultrasonido, Magnetoterapia).

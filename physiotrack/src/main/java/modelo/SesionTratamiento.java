@@ -1,4 +1,4 @@
-package modelo;
+package main.java.modelo;
 
 /**
  * Representa el evento de una sesión de terapia física en tiempo real.

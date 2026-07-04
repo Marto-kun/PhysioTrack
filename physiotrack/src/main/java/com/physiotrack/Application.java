@@ -1,4 +1,4 @@
-package com.physiotrack;
+package main.java.com.physiotrack;
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;

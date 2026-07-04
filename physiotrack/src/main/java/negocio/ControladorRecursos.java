@@ -1,7 +1,7 @@
-package negocio;
+package main.java.negocio;
 
-import modelo.EquipoBiomedico;
-import modelo.Insumo;
+import main.java.modelo.EquipoBiomedico;
+import main.java.modelo.Insumo;
 
 import java.util.ArrayList;
 import java.util.List;

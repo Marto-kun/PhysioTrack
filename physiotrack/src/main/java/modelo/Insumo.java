@@ -1,4 +1,4 @@
-package modelo;
+package main.java.modelo;
 
 /**
  * Representa los materiales consumibles y desechables de la clínica (ej. electrodos, geles).
