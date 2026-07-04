@@ -14,7 +14,7 @@ import java.util.Objects;
  * Aplica las reglas de negocio críticas del sistema para asegurar que la intensidad
  * de un ejercicio no represente un riesgo para la escala de dolor y lesión del paciente.
  *
- * @author [Martin Vozmedian]
+ * @author [Martin Vozmediano]
  * @version 1.0
  * @since 2026-05-19
  */
