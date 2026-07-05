@@ -12,8 +12,15 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import main.java.com.physiotrack.gui.views.RegistroFisioterapeutaView;
 import main.java.com.physiotrack.gui.views.PacientesView;
+import main.java.com.physiotrack.gui.views.InventarioView;
+import main.java.com.physiotrack.gui.views.SesionesView;
+import main.java.com.physiotrack.gui.views.PlanesView;
 import main.java.services.FisioterapeutaService;
 import main.java.services.PacienteService;
+import main.java.services.InsumoService;
+import main.java.services.EquipoBiomedicoService;
+import main.java.services.SesionTratamientoService;
+import main.java.services.PlanRehabilitacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -33,13 +40,34 @@ public class MainView extends AppLayout {
     @Autowired
     private PacienteService pacienteService;
 
+    @Autowired
+    private InsumoService insumoService;
+
+    @Autowired
+    private EquipoBiomedicoService equipoBiomedicoService;
+
+    @Autowired
+    private SesionTratamientoService sesionTratamientoService;
+
+    @Autowired
+    private PlanRehabilitacionService planRehabilitacionService;
+
     private Div contentArea;
     private RegistroFisioterapeutaView registroFisioterapeutaView;
     private PacientesView pacientesView;
+    private InventarioView inventarioView;
+    private SesionesView sesionesView;
+    private PlanesView planesView;
 
-    public MainView(FisioterapeutaService fisioterapeutaService, PacienteService pacienteService) {
+    public MainView(FisioterapeutaService fisioterapeutaService, PacienteService pacienteService,
+                    InsumoService insumoService, EquipoBiomedicoService equipoBiomedicoService,
+                    SesionTratamientoService sesionTratamientoService, PlanRehabilitacionService planRehabilitacionService) {
         this.fisioterapeutaService = fisioterapeutaService;
         this.pacienteService = pacienteService;
+        this.insumoService = insumoService;
+        this.equipoBiomedicoService = equipoBiomedicoService;
+        this.sesionTratamientoService = sesionTratamientoService;
+        this.planRehabilitacionService = planRehabilitacionService;
         createHeader();
         createDrawer();
         createContent();
@@ -91,7 +119,25 @@ public class MainView extends AppLayout {
         btnPacientes.setWidthFull();
         btnPacientes.addClickListener(e -> showPacientes());
 
-        drawer.add(btnRegistroFisio, btnPacientes);
+        // Botón para Gestión de Inventario
+        Button btnInventario = new Button("Gestión de Inventario");
+        btnInventario.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        btnInventario.setWidthFull();
+        btnInventario.addClickListener(e -> showInventario());
+
+        // Botón para Registro de Sesiones
+        Button btnSesiones = new Button("Registrar Sesiones");
+        btnSesiones.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        btnSesiones.setWidthFull();
+        btnSesiones.addClickListener(e -> showSesiones());
+
+        // Botón para Planes de Rehabilitación
+        Button btnPlanes = new Button("Planes de Rehabilitación");
+        btnPlanes.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        btnPlanes.setWidthFull();
+        btnPlanes.addClickListener(e -> showPlanes());
+
+        drawer.add(btnRegistroFisio, btnPacientes, btnInventario, btnSesiones, btnPlanes);
 
         addToDrawer(drawer);
     }
@@ -120,6 +166,31 @@ public class MainView extends AppLayout {
             pacientesView = new PacientesView(fisioterapeutaService, pacienteService);
         }
         contentArea.add(pacientesView);
+    }
+
+    private void showInventario() {
+        contentArea.removeAll();
+        if (inventarioView == null) {
+            inventarioView = new InventarioView(insumoService, equipoBiomedicoService);
+        }
+        contentArea.add(inventarioView);
+    }
+
+    private void showSesiones() {
+        contentArea.removeAll();
+        if (sesionesView == null) {
+            sesionesView = new SesionesView(pacienteService, fisioterapeutaService,
+                                           equipoBiomedicoService, insumoService, sesionTratamientoService);
+        }
+        contentArea.add(sesionesView);
+    }
+
+    private void showPlanes() {
+        contentArea.removeAll();
+        if (planesView == null) {
+            planesView = new PlanesView(pacienteService, planRehabilitacionService);
+        }
+        contentArea.add(planesView);
     }
 }
 

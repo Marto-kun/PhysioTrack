@@ -219,11 +219,7 @@ public class PacienteService {
         existente.setTipoLesion(paciente.getTipoLesion());
         existente.setNivelLesion(paciente.getNivelLesion());
 
-        // Si hay reasignación de fisioterapeuta, usar la lógica central
-        if (paciente.getFisioterapeutaAsignado() != null) {
-            asignarPacienteAFisioterapeuta(existente.getId(), paciente.getFisioterapeutaAsignado());
-            existente = pacienteRepository.findById(existente.getId()).orElse(existente);
-        }
+        existente.setFisioterapeutaAsignado(paciente.getFisioterapeutaAsignado());
 
         return pacienteRepository.save(existente);
     }
