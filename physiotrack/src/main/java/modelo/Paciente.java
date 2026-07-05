@@ -1,5 +1,9 @@
 package main.java.modelo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 /**
  * Representa a un paciente dentro del sistema PhysioTrack.
  * Almacena la información personal, datos de contacto y variables clínicas
@@ -10,15 +14,24 @@ package main.java.modelo;
  * @since 2026-05-19
  */
 
+@Document(collection = "pacientes")
 public class Paciente {
 
+    @Id
+    private String id;
     private String cedula;
     private String nombre;
     private int edad;
     private String tipoLesion;
     private int nivelLesion;
     private String prioridad;
+
+    @DBRef
     private Fisioterapeuta fisioterapeutaAsignado;
+
+    public Paciente() {
+        // Constructor vacío para MongoDB
+    }
 
     public Paciente(String cedula, String nombre, int edad,
                     String tipoLesion, int nivelLesion) {
@@ -86,6 +99,14 @@ public class Paciente {
 
     // Getters
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getCedula() {
         return cedula;
     }
@@ -138,4 +159,8 @@ public class Paciente {
         this.fisioterapeutaAsignado = fisioterapeutaAsignado;
     }
 
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
 }
+

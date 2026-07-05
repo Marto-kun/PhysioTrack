@@ -44,3 +44,6 @@ vite.generated.ts
 ### Sistema Operativo (Mac OS / Windows) ###
 .DS_Store
 Thumbs.db
+
+### Environment Variables ###
+.env

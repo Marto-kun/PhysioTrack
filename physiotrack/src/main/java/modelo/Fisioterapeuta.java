@@ -1,5 +1,7 @@
 package main.java.modelo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +15,19 @@ import java.util.List;
  * @since 2026-06-28
  */
 
+@Document(collection = "fisioterapeutas")
 public class Fisioterapeuta {
 
+    @Id
+    private String id;
     private String cedula;
     private String nombre;
     private String especialidad;
     private List<Paciente> pacientesAsignados = new ArrayList<>();
+
+    public Fisioterapeuta() {
+        // Constructor vacío para MongoDB
+    }
 
     public Fisioterapeuta(String cedula, String especialidad, String nombre) {
         this.cedula = cedula;
@@ -61,6 +70,14 @@ public class Fisioterapeuta {
 
     // Getters y Setters
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getCedula() {
         return cedula;
     }
@@ -93,3 +110,5 @@ public class Fisioterapeuta {
         this.pacientesAsignados = pacientesAsignados;
     }
 }
+
+
