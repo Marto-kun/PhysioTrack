@@ -48,6 +48,7 @@ public class PacientesView extends VerticalLayout {
     public PacientesView(FisioterapeutaService fisioterapeutaService, PacienteService pacienteService) {
         this.fisioterapeutaService = fisioterapeutaService;
         this.pacienteService = pacienteService;
+        setWidthFull();
         initializeView();
     }
 
@@ -78,6 +79,7 @@ public class PacientesView extends VerticalLayout {
 
         // Contenedor de pacientes
         pacientesContainer = new Div();
+        pacientesContainer.setWidthFull();
         pacientesContainer.addClassNames(LumoUtility.Padding.LARGE);
         pacientesContainer.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
         pacientesContainer.getStyle().set("border-radius", "4px");
@@ -85,6 +87,7 @@ public class PacientesView extends VerticalLayout {
 
         // Grid de pacientes
         pacientesGrid = createPacientesGrid();
+        pacientesGrid.setWidthFull();
         pacientesContainer.add(pacientesGrid);
 
         // Botón para registrar nuevo paciente
@@ -130,6 +133,7 @@ public class PacientesView extends VerticalLayout {
     private Grid<Paciente> createPacientesGrid() {
         Grid<Paciente> grid = new Grid<>(Paciente.class, false);
         grid.setWidthFull();
+        grid.setHeight("450px");
 
         // Columna: Cédula
         grid.addColumn(Paciente::getCedula)
@@ -201,6 +205,7 @@ public class PacientesView extends VerticalLayout {
         if (fisioterapeutaSeleccionado != null && pacienteService != null) {
             List<Paciente> pacientes = pacienteService.obtenerPacientesPorFisioterapeuta(fisioterapeutaSeleccionado);
             pacientesGrid.setItems(pacientes);
+            pacientesGrid.getDataProvider().refreshAll(); //Recargar para que aparezcan los nuevos pacientes agregados
         }
     }
 
@@ -346,13 +351,13 @@ public class PacientesView extends VerticalLayout {
 
             if (pacienteService != null) {
                 if (pacienteExistente == null) {
+                    if(fisioterapeuta == null){
+                        showError("Por favor seleccione un fisioterapeuta antes de continuar.");
+                        return;
+                    }
                     paciente = pacienteService.registrarPaciente(paciente, fisioterapeuta);
                 } else {
                     paciente = pacienteService.actualizarPaciente(paciente);
-                }
-
-                if (fisioterapeuta != null) {
-                    pacienteService.asignarPacienteAFisioterapeuta(paciente.getId(), fisioterapeuta);
                 }
             }
 

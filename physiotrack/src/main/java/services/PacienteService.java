@@ -67,8 +67,18 @@ public class PacienteService {
 
         gestorPacientes.registrarAsignacion(paciente, fisioPersist);
 
+        Fisioterapeuta fisioEmbebido = new Fisioterapeuta();
+        fisioEmbebido.setId(fisioPersist.getId());
+        fisioEmbebido.setCedula(fisioPersist.getCedula());
+        fisioEmbebido.setNombre(fisioPersist.getNombre());
+        fisioEmbebido.setEspecialidad(fisioPersist.getEspecialidad());
+
+        paciente.setFisioterapeutaAsignado(fisioEmbebido);
+
         // Persistencia secuencial estricta para asegurar sincronización en MongoDB Atlas
         Paciente pacienteGuardado = pacienteRepository.save(paciente);
+
+
 
         // Tras guardar el paciente (y generar su ID), persistir el fisioterapeuta
         // para que su lista interna 'pacientesAsignados' se actualice en Atlas
@@ -129,7 +139,7 @@ public class PacienteService {
             throw new IllegalArgumentException("Fisioterapeuta no encontrado en la base de datos");
         }
 
-        return pacienteRepository.findByFisioterapeutaAsignado(fisio);
+        return pacienteRepository.findByFisioterapeutaAsignado_Id(fisio.getId());
     }
 
     /**

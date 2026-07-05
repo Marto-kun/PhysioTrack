@@ -25,8 +25,7 @@ public class Paciente {
     private String tipoLesion;
     private int nivelLesion;
     private String prioridad;
-
-    @DBRef
+    
     private Fisioterapeuta fisioterapeutaAsignado;
 
     public Paciente() {

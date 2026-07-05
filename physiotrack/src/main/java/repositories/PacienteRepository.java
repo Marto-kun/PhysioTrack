@@ -5,6 +5,8 @@ import main.java.modelo.Fisioterapeuta;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Repositorio MongoDB para la entidad Paciente.
  * Proporciona operaciones CRUD y consultas personalizadas para gestionar
@@ -36,5 +38,7 @@ public interface PacienteRepository extends MongoRepository<Paciente, String> {
      * @return lista de pacientes con prioridad Urgente
      */
     java.util.List<Paciente> findByPrioridad(String prioridad);
+
+    List<Paciente> findByFisioterapeutaAsignado_Id(String id);
 }
 
