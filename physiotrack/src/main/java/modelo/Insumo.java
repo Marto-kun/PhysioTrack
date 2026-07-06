@@ -86,6 +86,13 @@ public class Insumo {
         this.stock -= cantidad;
     }
 
+    public void reabastecerStock(int cantidad) {
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
+        }
+        this.stock += cantidad;
+    }
+
     // Verificar si el stock está por debajo del mínimo
     public boolean stockBajo() {
         return stock <= stockMinimo;

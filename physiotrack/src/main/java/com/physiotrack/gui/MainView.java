@@ -8,18 +8,19 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import main.java.com.physiotrack.gui.views.RegistroFisioterapeutaView;
-import main.java.com.physiotrack.gui.views.PacientesView;
-import main.java.com.physiotrack.gui.views.InventarioView;
-import main.java.com.physiotrack.gui.views.SesionesView;
-import main.java.com.physiotrack.gui.views.PlanesView;
+import main.java.com.physiotrack.gui.views.*;
 import main.java.services.FisioterapeutaService;
 import main.java.services.PacienteService;
 import main.java.services.InsumoService;
 import main.java.services.EquipoBiomedicoService;
 import main.java.services.SesionTratamientoService;
+import main.java.repositories.SesionTratamientoRepository;
+import main.java.repositories.InsumoRepository;
+import main.java.repositories.EquipoBiomedicoRepository;
 import main.java.services.PlanRehabilitacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,7 +51,16 @@ public class MainView extends AppLayout {
     private SesionTratamientoService sesionTratamientoService;
 
     @Autowired
+    private SesionTratamientoRepository sesionTratamientoRepository;
+
+    @Autowired
     private PlanRehabilitacionService planRehabilitacionService;
+
+    @Autowired
+    private InsumoRepository insumoRepository;
+
+    @Autowired
+    private EquipoBiomedicoRepository equipoBiomedicoRepository;
 
     private Div contentArea;
     private RegistroFisioterapeutaView registroFisioterapeutaView;
@@ -170,17 +180,36 @@ public class MainView extends AppLayout {
 
     private void showInventario() {
         contentArea.removeAll();
-        if (inventarioView == null) {
-            inventarioView = new InventarioView(insumoService, equipoBiomedicoService);
-        }
-        contentArea.add(inventarioView);
+
+        Tab tabInsumos = new com.vaadin.flow.component.tabs.Tab("Insumos");
+        Tab tabEquipos = new com.vaadin.flow.component.tabs.Tab("Equipos Biomédicos");
+        Tabs tabs = new com.vaadin.flow.component.tabs.Tabs(tabInsumos, tabEquipos);
+        tabs.setWidthFull();
+
+        InventarioInsumosView vistaInsumos = new InventarioInsumosView(insumoRepository);
+        InventarioEquiposView vistaEquipos = new InventarioEquiposView(equipoBiomedicoRepository);
+
+
+        VerticalLayout vistaContenedor = new VerticalLayout(vistaInsumos, vistaEquipos);
+        vistaContenedor.setPadding(false);
+        vistaContenedor.setSpacing(false);
+
+        vistaInsumos.setVisible(true);
+        vistaEquipos.setVisible(false);
+
+        tabs.addSelectedChangeListener(e -> {
+            vistaInsumos.setVisible(e.getSelectedTab() == tabInsumos);
+            vistaEquipos.setVisible(e.getSelectedTab() == tabEquipos);
+        });
+
+        contentArea.add(tabs, vistaContenedor);
     }
 
     private void showSesiones() {
         contentArea.removeAll();
         if (sesionesView == null) {
             sesionesView = new SesionesView(pacienteService, fisioterapeutaService,
-                                           equipoBiomedicoService, insumoService, sesionTratamientoService);
+                                           equipoBiomedicoService, insumoService, sesionTratamientoService, sesionTratamientoRepository);
         }
         contentArea.add(sesionesView);
     }

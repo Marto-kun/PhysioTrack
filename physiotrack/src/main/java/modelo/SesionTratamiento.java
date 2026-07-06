@@ -1,5 +1,7 @@
 package main.java.modelo;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * Representa el evento de una sesión de terapia física en tiempo real.
  * Funciona como entidad integradora que vincula al paciente con las observaciones
@@ -12,6 +14,7 @@ package main.java.modelo;
 
 public class SesionTratamiento {
 
+    @Id
     private String idSesion;
     private String fecha;
     private Paciente paciente;

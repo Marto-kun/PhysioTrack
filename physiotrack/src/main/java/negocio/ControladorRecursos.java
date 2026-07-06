@@ -62,8 +62,8 @@ public class ControladorRecursos {
             throw new IllegalArgumentException("Error: La cantidad a consumir debe ser mayor que cero.");
         }
 
-        if (cantidad >= usando.getStockMinimo()) {
-            throw new IllegalArgumentException("Error: La cantidad a consumir no puede ser mayor ni igual que el stock disponible del insumo " + usando.getNombre());
+        if (cantidad > usando.getStock()) {
+            throw new IllegalArgumentException("Error: Stock insuficiente para consumir " + cantidad + " unidades del insumo " + usando.getNombre() + ". Stock disponible: " + usando.getStock());
         }
 
 
