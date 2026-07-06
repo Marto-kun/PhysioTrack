@@ -50,14 +50,28 @@ public final class PersistenceSanitizer {
 
     public static PlanRehabilitacion sanitize(PlanRehabilitacion p) {
         if (p == null) return null;
-        // PlanRehabilitacion no expone un getter para el objeto Paciente; persistimos el plan
-        // con paciente nulo para mantener el documento plano y evitar recursividad.
-        return new PlanRehabilitacion(p.getIdPlan(), null, p.getEjercicio(), p.getSeries(), p.getRepeticiones(), p.getDiasPorSemana());
+
+        return new PlanRehabilitacion(
+                p.getIdPlan(),
+                sanitize(p.getPaciente()),
+                p.getEjercicio(),
+                p.getSeries(),
+                p.getRepeticiones(),
+                p.getDiasPorSemana()
+        );
     }
 
     public static SesionTratamiento sanitize(SesionTratamiento s) {
         if (s == null) return null;
-        SesionTratamiento out = new SesionTratamiento(s.getIdSesion(), s.getFecha(), sanitize(s.getPaciente()), sanitize(s.getFisioterapeutaResponsable()), sanitize(s.getEquipo()), sanitize(s.getInsumo()), s.getObservaciones(), s.getDuracionMinutos());
+        SesionTratamiento out = new SesionTratamiento(
+                s.getIdSesion(),
+                s.getFecha(),
+                sanitize(s.getPaciente()),
+                sanitize(s.getFisioterapeutaResponsable()),
+                sanitize(s.getEquipo()),
+                s.getInsumo(),
+                s.getObservaciones(),
+                s.getDuracionMinutos());
         return out;
     }
 }

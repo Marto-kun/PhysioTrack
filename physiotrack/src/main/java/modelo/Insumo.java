@@ -1,5 +1,7 @@
 package main.java.modelo;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * Representa los materiales consumibles y desechables de la clínica (ej. electrodos, geles).
  * Controla las existencias físicas en el inventario y dispara alertas automáticas
@@ -11,8 +13,9 @@ package main.java.modelo;
  */
 
 public class Insumo {
-
+    @Id
     private String id;
+
     private String nombre;
     private String fechaElaboracion;
     private String fechaCaducidad;
@@ -32,6 +35,72 @@ public class Insumo {
         this.stock = stock;
         this.stockMinimo = stockMinimo;
     }
+
+    //Metodos:
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        Insumo insumoComp = (Insumo) o;
+
+        if (this.id == null) {
+            if (insumoComp.id == null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return this.id.equals(insumoComp.id);
+    }
+
+    @Override
+    public int hashCode() {
+        if (this.id == null) {
+            return 0;
+        }
+        return this.id.hashCode();
+    }
+
+    // Descontar unidades del inventario
+    public void utilizarInsumo(int cantidad) {
+
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
+        }
+
+        if (cantidad > this.stock) {
+            throw new IllegalArgumentException("Stock insuficiente.");
+        }
+
+        this.stock -= cantidad;
+    }
+
+    // Verificar si el stock está por debajo del mínimo
+    public boolean stockBajo() {
+        return stock <= stockMinimo;
+    }
+
+    // Verificar si el insumo tiene fecha de caducidad
+    public boolean tieneCaducidad() {
+        return fechaCaducidad != null && !fechaCaducidad.trim().isEmpty();
+    }
+
+    // Verificar si el insumo tiene fecha de elaboración
+    public boolean tieneFechaElaboracion() {
+        return fechaElaboracion != null && !fechaElaboracion.trim().isEmpty();
+    }
+
 
     // Getters
     public String getId() {
@@ -80,34 +149,4 @@ public class Insumo {
 
         this.stock += cantidad;
     }
-
-    // Descontar unidades del inventario
-    public void utilizarInsumo(int cantidad) {
-
-        if (cantidad <= 0) {
-            throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
-        }
-
-        if (cantidad > this.stock) {
-            throw new IllegalArgumentException("Stock insuficiente.");
-        }
-
-        this.stock -= cantidad;
-    }
-
-    // Verificar si el stock está por debajo del mínimo
-    public boolean stockBajo() {
-        return stock <= stockMinimo;
-    }
-
-    // Verificar si el insumo tiene fecha de caducidad
-    public boolean tieneCaducidad() {
-        return fechaCaducidad != null && !fechaCaducidad.trim().isEmpty();
-    }
-
-    // Verificar si el insumo tiene fecha de elaboración
-    public boolean tieneFechaElaboracion() {
-        return fechaElaboracion != null && !fechaElaboracion.trim().isEmpty();
-    }
 }
-

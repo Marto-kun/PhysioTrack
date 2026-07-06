@@ -6,6 +6,8 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -62,7 +64,7 @@ public class PlanesView extends VerticalLayout {
         banner.removeAll();
         banner.add(seguimiento);
 
-        List<PlanRehabilitacion> planes = planService.findByPacienteCedula(p.getCedula());
+        List<PlanRehabilitacion> planes = planService.findByPacienteId(p.getId());
         grid.setItems(planes);
     }
 
@@ -79,12 +81,43 @@ public class PlanesView extends VerticalLayout {
 
         Button guardar = new Button("Guardar", e -> {
             Paciente p = pacienteBox.getValue();
-            if (p == null) return;
-            PlanRehabilitacion plan = new PlanRehabilitacion(java.util.UUID.randomUUID().toString(), p, ejercicio.getValue(), series.getValue(), repeticiones.getValue(), dias.getValue());
-            // Validaciones del evaluador se ejecutan dentro del servicio
-            planService.asignarPlan(p, plan, p.getNivelLesion());
-            onPacienteSelected(p);
-            dlg.close();
+
+            if (p == null || ejercicio.getValue().isEmpty() || series.getValue() == null || repeticiones.getValue() == null) {
+                Notification notification = new Notification("Por favor complete todos los campos obligatorios.");
+                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                notification.setDuration(3000);
+                notification.open();
+                return;
+            }
+
+            Paciente pacienteClon = new Paciente(p.getCedula(), p.getNombre(), p.getEdad(), p.getTipoLesion(), p.getNivelLesion());
+            pacienteClon.setId(p.getId());
+
+            PlanRehabilitacion plan = new PlanRehabilitacion(
+                    java.util.UUID.randomUUID().toString(),
+                    pacienteClon,
+                    ejercicio.getValue(),
+                    series.getValue(),
+                    repeticiones.getValue(),
+                    dias.getValue()
+            );
+
+            try {
+                planService.asignarPlan(p, plan, p.getNivelLesion());
+
+                Notification notification = new Notification("¡Plan de rehabilitación asignado correctamente!");
+                notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+                notification.setDuration(3000);
+                notification.open();
+
+                onPacienteSelected(p);
+                dlg.close();
+            } catch (Exception ex) {
+                Notification notification = new Notification("Error al guardar: " + ex.getMessage());
+                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                notification.setDuration(3000);
+                notification.open();
+            }
         });
 
         dlg.add(pacienteBox, ejercicio, series, repeticiones, dias, guardar);

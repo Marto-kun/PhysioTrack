@@ -1,5 +1,9 @@
 package main.java.modelo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Modela el plan de ejercicios terapéuticos asignado a un paciente.
  * Controla la intensidad de las rutinas (series, repeticiones y días) y realiza
@@ -9,11 +13,14 @@ package main.java.modelo;
  * @version 1.0
  * @since 2026-05-19
  */
-
+@Document(collection = "planes")
 public class PlanRehabilitacion {
-
+    @Id
     private String idPlan;
+
+    @DBRef
     private Paciente paciente;
+
     private String ejercicio;
 
     private int series;
@@ -41,7 +48,40 @@ public class PlanRehabilitacion {
         this.progresoFisico = 0;
     }
 
+    // Métodos
+
+    public void actualizarCumplimiento(double porcentaje) {
+
+        if (porcentaje < 0 || porcentaje > 100) {
+            throw new IllegalArgumentException("El porcentaje debe estar entre 0 y 100.");
+        }
+
+        porcentajeCumplimiento = porcentaje;
+    }
+
+    public void actualizarProgreso(double progreso) {
+
+        if (progreso < 0 || progreso > 100) {
+            throw new IllegalArgumentException("El progreso debe estar entre 0 y 100.");
+        }
+
+        progresoFisico = progreso;
+    }
+
+    public boolean tratamientoCompletado() {
+        return porcentajeCumplimiento == 100;
+    }
+
+    public boolean progresoSatisfactorio() {
+        return progresoFisico >= 80;
+    }
+
     // Getters
+
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
 
     public String getIdPlan() {
         return idPlan;
@@ -77,6 +117,11 @@ public class PlanRehabilitacion {
 
     // Setters
 
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
     public void setEjercicio(String ejercicio) {
         this.ejercicio = ejercicio;
     }
@@ -93,31 +138,5 @@ public class PlanRehabilitacion {
         this.diasPorSemana = diasPorSemana;
     }
 
-    // Métodos
 
-    public void actualizarCumplimiento(double porcentaje) {
-
-        if (porcentaje < 0 || porcentaje > 100) {
-            throw new IllegalArgumentException("El porcentaje debe estar entre 0 y 100.");
-        }
-
-        porcentajeCumplimiento = porcentaje;
-    }
-
-    public void actualizarProgreso(double progreso) {
-
-        if (progreso < 0 || progreso > 100) {
-            throw new IllegalArgumentException("El progreso debe estar entre 0 y 100.");
-        }
-
-        progresoFisico = progreso;
-    }
-
-    public boolean tratamientoCompletado() {
-        return porcentajeCumplimiento == 100;
-    }
-
-    public boolean progresoSatisfactorio() {
-        return progresoFisico >= 80;
-    }
 }

@@ -31,6 +31,40 @@ public class EquipoBiomedico {
 
     // Métodos
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        EquipoBiomedico equipoComp = (EquipoBiomedico) o;
+
+        if (this.id == null) {
+            if (equipoComp.id == null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return this.id.equals(equipoComp.id);
+    }
+
+    @Override
+    public int hashCode() {
+        if (this.id == null) {
+            return 0;
+        }
+        return this.id.hashCode();
+    }
+
     public boolean disponible() {
         return estado.equalsIgnoreCase("Disponible");
     }
@@ -44,7 +78,7 @@ public class EquipoBiomedico {
         estado = "En Uso";
     }
 
-    public boolean necesitaMantenimiento(){
+    public boolean necesitaMantenimiento() {
         return this.horasDeUso >= 50;
     }
 

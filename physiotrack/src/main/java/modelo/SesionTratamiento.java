@@ -92,7 +92,7 @@ public class SesionTratamiento {
         this.equipo = equipo;
     }
 
-    public void cambiarInsumo(Insumo insumo) {
+    public void setInsumo(Insumo insumo) {
         this.insumo = insumo;
     }
 

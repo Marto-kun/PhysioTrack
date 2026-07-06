@@ -18,8 +18,8 @@ public class PlanRehabilitacionService {
         this.planRepository = planRepository;
     }
 
-    public List<PlanRehabilitacion> findByPacienteCedula(String cedula) {
-        return planRepository.findByPaciente_Cedula(cedula);
+    public List<PlanRehabilitacion> findByPacienteId(String id) {
+        return planRepository.findByPaciente_Id(id);
     }
 
     public PlanRehabilitacion asignarPlan(Paciente paciente, PlanRehabilitacion plan, int nivelLesion) {
